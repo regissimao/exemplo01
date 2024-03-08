@@ -7,13 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.repassi.entity.Pedido;
+import br.com.repassi.entity.Usuario;
 import br.com.repassi.repository.PedidoRepository;
+import br.com.repassi.repository.UsuarioRepository;
 
 @Service
 public class PedidoService {
 	
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	public PedidoService() {}
 
@@ -26,8 +31,10 @@ public class PedidoService {
 		return pedidoRepository.findById(idPedido);
 	}
 	
-	public void salvarPedido (Pedido user) {
-		pedidoRepository.save(user);
+	public void salvarPedido (Pedido ped, int id_usuario) {
+	  Usuario usuario = usuarioRepository.findById(id_usuario).get();
+	  ped.setUsuario(usuario);
+	  pedidoRepository.save(ped);
 	}
 	
 	public void removerPedido(int idPedido) {

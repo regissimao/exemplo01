@@ -1,5 +1,8 @@
 package br.com.repassi.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.repassi.entity.Pedido;
 import br.com.repassi.service.PedidoService;
+import br.com.repassi.vo.PedidoVO;
 
 @RestController
 @RequestMapping(path="/pedido")
@@ -36,20 +40,20 @@ public class PedidoController {
 	}
 	
 	@PostMapping()
-	public void incluirPedido (@RequestBody Pedido ped) {
+	public void incluirPedido (@RequestBody PedidoVO pedVO) {
 	  Pedido p = new Pedido();
-	  p.setData(ped.getData());
-	  p.setQuantidade(ped.getQuantidade());
-	  pedidoService.salvarPedido(p);
+	  p.setData(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+	  p.setQuantidade(pedVO.getQuantidade());
+	  pedidoService.salvarPedido(p, pedVO.getId_usuario());
 	}
 	
 	@PutMapping()
-	public void alterarPedido (@RequestBody Pedido ped) {
+	public void alterarPedido (@RequestBody PedidoVO pedVO) {
 	  Pedido p = new Pedido();
-	  p.setId(ped.getId());
-	  p.setData(ped.getData());
-	  p.setQuantidade(ped.getQuantidade());
-	  pedidoService.salvarPedido(p);
+	  p.setId(pedVO.getId());
+	  p.setData(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+	  p.setQuantidade(pedVO.getQuantidade());
+	  pedidoService.salvarPedido(p, pedVO.getId_usuario());
 	}
 	
 	@DeleteMapping(path="/{idPedido}")

@@ -29,8 +29,8 @@ public class UsuarioController {
 		return usuarioService.retornarTodosUsuarios();
 	}
 	
-	@GetMapping(path="/{idProduto}")
-	public Optional<Usuario> retornarUsuario(@PathVariable("idProduto") int idUsuario) {
+	@GetMapping(path="/{idUsuario}")
+	public Optional<Usuario> retornarUsuario(@PathVariable("idUsuario") int idUsuario) {
 		
 		return usuarioService.retornarUsuario(idUsuario);
 	}
